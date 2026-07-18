@@ -87,4 +87,4 @@ Transient failures (network, `429`, `5xx`) are retried automatically with expone
 Because a captcha token is single-use, a retried verify carries an **idempotency key** so the retry
 replays the first outcome instead of failing the now-consumed token.
 
-MIT licensed. Docs: <https://krynox.net/docs>
+MIT licensed. Docs: <https://docs.krynox.net>
