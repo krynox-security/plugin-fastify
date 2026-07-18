@@ -1,0 +1,44 @@
+{
+  "name": "@krynox/captcha-fastify",
+  "version": "0.1.0",
+  "description": "Krynox Captcha for Fastify — verify preHandler + widget embed helper. Privacy-first, proof-of-work CAPTCHA.",
+  "keywords": [
+    "fastify",
+    "captcha",
+    "krynox",
+    "prehandler",
+    "proof-of-work",
+    "privacy",
+    "bot"
+  ],
+  "homepage": "https://krynox.net",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "fastify": ">=4"
+  },
+  "devDependencies": {
+    "fastify": ">=4",
+    "typescript": "^5.4.0",
+    "@types/node": "^20 || ^22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krynox-security/plugin-fastify.git"
+  }
+}
