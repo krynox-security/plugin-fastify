@@ -87,4 +87,12 @@ Transient failures (network, `429`, `5xx`) are retried automatically with expone
 Because a captcha token is single-use, a retried verify carries an **idempotency key** so the retry
 replays the first outcome instead of failing the now-consumed token.
 
+## Honeypot
+
+Enable **Honeypot** for the site in the Krynox dashboard and the widget injects an invisible decoy
+field (`krynox-hp`) that only bots fill in. This preHandler forwards it to `/siteverify` as
+`honeypot` automatically (override the field name with `honeypotField`) — the data plane then floors
+the score (report mode) or rejects with `honeypot-tripped` (enforce mode). See the
+[Honeypot docs](https://docs.krynox.net/server-side/honeypot/).
+
 MIT licensed. Docs: <https://docs.krynox.net>

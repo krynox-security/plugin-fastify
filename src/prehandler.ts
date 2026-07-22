@@ -15,6 +15,8 @@ export interface KrynoxPreHandlerConfig {
   apiHost?: string;
   /** Body field carrying the solved token (default `krynox-captcha`). */
   field?: string;
+  /** Body field carrying the honeypot decoy value (default `krynox-hp`), forwarded to `/siteverify`. */
+  honeypotField?: string;
   /** Header checked when the field is absent (default `x-krynox-captcha`) — for fetch/API clients. */
   header?: string;
   /**
@@ -55,6 +57,7 @@ function clientIp(request: FastifyRequest): string | undefined {
  */
 export function krynoxCaptcha(config: KrynoxPreHandlerConfig = {}): preHandlerAsyncHookHandler {
   const field = config.field ?? 'krynox-captcha';
+  const honeypotField = config.honeypotField ?? 'krynox-hp';
   const header = (config.header ?? 'x-krynox-captcha').toLowerCase();
   const methods = config.methods ?? ['POST', 'PUT', 'PATCH', 'DELETE'];
 
@@ -64,11 +67,13 @@ export function krynoxCaptcha(config: KrynoxPreHandlerConfig = {}): preHandlerAs
     const body = request.body as Record<string, unknown> | undefined;
     const fromBody = typeof body?.[field] === 'string' ? (body[field] as string) : undefined;
     const token = fromBody ?? (request.headers[header] as string | undefined);
+    const honeypot = typeof body?.[honeypotField] === 'string' ? (body[honeypotField] as string) : undefined;
 
     const result = await verifyKrynox(token, {
       secret: config.secret,
       apiHost: config.apiHost,
       remoteip: clientIp(request),
+      honeypot,
       timeoutMs: config.timeoutMs,
       retries: config.retries,
     });
