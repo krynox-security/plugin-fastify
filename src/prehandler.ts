@@ -36,9 +36,9 @@ export interface KrynoxPreHandlerConfig {
 }
 
 function clientIp(request: FastifyRequest): string | undefined {
-  const fwd = request.headers['x-forwarded-for'];
-  const first = Array.isArray(fwd) ? fwd[0] : fwd?.split(',')[0];
-  return first?.trim() || request.ip || undefined;
+  // Fastify derives this from the socket and only trusts forwarded values when
+  // the server's `trustProxy` option explicitly allows the connecting proxy.
+  return request.ip || undefined;
 }
 
 /**

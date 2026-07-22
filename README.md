@@ -11,6 +11,10 @@ Set `KRYNOX_SECRET_KEY` (your `kcps_…` secret) in the environment.
 
 ## Verify preHandler
 
+Visitor IP comes from Fastify `request.ip`. Set Fastify's `trustProxy` only to
+your actual proxy addresses/hops; the plugin never trusts raw
+`X-Forwarded-For` by default.
+
 Attach `krynoxCaptcha()` as a route `preHandler`. It reads the solved token from the request body
 field `krynox-captcha` and falls back to the `x-krynox-captcha` header for fetch/API clients. On
 failure it replies `403`; on success it sets the full result on `request.krynox` and the route runs.
